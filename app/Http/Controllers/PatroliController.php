@@ -4,16 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Patroli;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use File;
+use Illuminate\Support\Facades\Storage;
 
 class PatroliController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public $path_image;
+
+    function __construct()
+    {
+        $this->path_image = storage_path('app'.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'image');
+    }
+
     public function index()
     {
         $users = User::with('patroli')->get();
@@ -25,69 +31,64 @@ class PatroliController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function patroli()
     {
-        //
+        $patroli = Patroli::where('users_id', Auth::user()->id)
+                            ->whereDate('date', Carbon::today())
+                            ->first();
+        return view('pages.karyawan.patroli', compact('patroli'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function mulaiPatroli()
     {
-        //
+        Patroli::insert([
+            'users_id' => Auth::user()->id,
+            'date' => Carbon::today()->format('Y-m-d'),
+            'start' => Carbon::now()->format('H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+
+        return redirect('/patroli');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function selesaiPatroli(Request $request)
     {
-        //
-    }
+        $this->validate($request,
+        [
+            'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'report' => 'required'
+        ],[
+            'required' => ':attribute tidak boleh kosong !'
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        if($request->hasFile('photo'))
+        {
+            $file = $request->file('photo');
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+            $extension = $file->extension();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+            $new_filename = Carbon::now()->timestamp .'.'.$extension;
+
+            if (!File::isDirectory($this->path_image)) {
+                File::makeDirectory($this->path_image);
+            }
+
+            $p = Storage::putFileAs(
+                'public/image', $file, $new_filename
+            );
+
+
+            $patroli = Patroli::whereDate('date', Carbon::today()->format('Y-m-d'))
+                                ->where('users_id', Auth::user()->id)
+                                ->update([
+                                    'end' => Carbon::now()->format('H:i:s'),
+                                    'report' => $request->report,
+                                    'photo' => $new_filename
+                                ]);
+
+            return redirect('/patroli');
+        } else {
+            return redirect()->back()->withErrors('Silakan Lampirkan Foto');
+        }
     }
 }
