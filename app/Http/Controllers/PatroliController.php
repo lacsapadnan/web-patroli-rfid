@@ -35,6 +35,7 @@ class PatroliController extends Controller
     {
         $patroli = Patroli::where('users_id', Auth::user()->id)
                             ->whereDate('date', Carbon::today())
+                            ->where('end',null)
                             ->first();
         return view('pages.karyawan.patroli', compact('patroli'));
     }

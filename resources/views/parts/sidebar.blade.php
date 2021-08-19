@@ -43,14 +43,6 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="dropdown-toggle" href="{{ route('scan') }}">
-                        <span class="icon-holder">
-                            <i class="anticon anticon-dashboard"></i>
-                        </span>
-                        <span class="title">Scan</span>
-                    </a>
-                </li>
             @endif
         </ul>
     </div>

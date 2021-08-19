@@ -26,13 +26,16 @@
                             <div class="col">
                                 <ul class="list-unstyled m-t-10">
                                     <div class="row">
-                                        @if ($patroli == null)
+                                        @if ($patroli == null || $patroli['end'] != null)
                                             <div class="col-sm-4 col-4 font-weight-semibold text-dark m-b-5 text-center">
-                                                <form action="{{ route('mulai-patroli') }}" method="post">
+                                                {{-- <form action="{{ route('mulai-patroli') }}" method="post">
                                                     @csrf
                                                     <span>Mulai Patroli: </span>
                                                     <button type="submit" class="btn btn-success">Mulai</button>
-                                                </form>
+                                                </form> --}}
+                                                    <h3>Silahkan Tempelkan Kartu RFID Anda</h3>
+                                                    <img src="{{ url('/storage/image/rfid.png') }}" style="width: 200px"> <br>
+                                                    <img src="{{ url('/storage/image/animasi2.gif') }}">
                                             </div>
                                         @else
                                             @if ($patroli->end == null)
@@ -57,10 +60,6 @@
                                                         <textarea name="report" id="report" cols="30" rows="4" class="form-control" placeholder="report"></textarea>
                                                         <button type="submit" class="btn btn-danger mt-3">Selesai</button>
                                                     </form>
-                                                </div>
-                                            @else
-                                                <div class="col-sm-12 col-12 font-weight-semibold text-dark m-b-5 text-center">
-                                                    <span class="btn bg-danger p-1 text-white badge" style="font-size: 80%">Patroli Hari ini Selesai</span>
                                                 </div>
                                             @endif
                                         @endif

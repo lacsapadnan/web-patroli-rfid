@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rfid;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,9 +17,11 @@ class UserController extends Controller
     public function index()
     {
         $users = User::where('role', 'karyawan')->get();
+        $rfid = Rfid::first();
         // dd($users);
         return view('pages.admin.data_karyawan', [
-            'data' => $users
+            'data' => $users,
+            'rfid' => $rfid
         ]);
     }
 
@@ -41,6 +44,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $users = User::create($request->except('_token'));
+        $rfid = Rfid::where('uuid', $request->uuid)->delete();
         return redirect()->back();
     }
 

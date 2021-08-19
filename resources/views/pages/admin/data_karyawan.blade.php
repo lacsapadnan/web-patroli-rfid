@@ -79,7 +79,7 @@
                             <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="uuid">UUID</label>
-                                <input name="uuid" type="text" class="form-control" id="uuid" placeholder="Tempelkan kartu rfid...">
+                                <input name="uuid" type="text" class="form-control" id="uuid" placeholder="Tempelkan kartu rfid..." value="{{(($rfid != null) ? $rfid->uuid : '')}}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="name">Nama</label>
@@ -103,7 +103,7 @@
                                 </div>
                             </div>
                             <input type="text" id="role" class="form-control" name="role" value="karyawan" hidden>
-                            <input type="password" id="password" class="form-control" name="password" value="{{ bcrypt('karywan123') }}" hidden>
+                            <input type="password" id="password" class="form-control" name="password" value="{{ bcrypt('karyawan123') }}" hidden>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">Save</button>
