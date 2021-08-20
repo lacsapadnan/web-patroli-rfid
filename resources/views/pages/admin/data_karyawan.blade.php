@@ -79,7 +79,7 @@
                             <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="uuid">UUID</label>
-                                <input name="uuid" type="text" class="form-control" id="uuid" placeholder="Tempelkan kartu rfid..." value="{{(($rfid != null) ? $rfid->uuid : '')}}">
+                                <input name="uuid" type="text" class="form-control" id="uuid" placeholder="Tempelkan kartu rfid...">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="name">Nama</label>
@@ -123,4 +123,22 @@
     <script>$('#data-table').DataTable();</script>
     <script src="assets/vendors/select2/select2.min.js"></script>
     <script>$('.select2').select2();</script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            setInterval(function() {
+                $.ajax({
+                    url: `api/get-uuid`,
+                    method: 'GET'
+                })
+                .then((res) => {
+                    if (res.success) {
+                        $('#uuid').val(res.uuid);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+            }, 2000);
+        });
+    </script>
 @endpush

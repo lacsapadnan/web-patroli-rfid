@@ -17,11 +17,9 @@ class UserController extends Controller
     public function index()
     {
         $users = User::where('role', 'karyawan')->get();
-        $rfid = Rfid::first();
         // dd($users);
         return view('pages.admin.data_karyawan', [
             'data' => $users,
-            'rfid' => $rfid
         ]);
     }
 
