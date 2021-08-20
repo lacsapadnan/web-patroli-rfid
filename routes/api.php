@@ -23,5 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('rfid', RfidController::class);
 Route::post('mulai-patroli', [PatroliController::class,'mulaiPatroli']);
-
 Route::get('get-uuid', [UUIDController::class, 'getUUID']);
