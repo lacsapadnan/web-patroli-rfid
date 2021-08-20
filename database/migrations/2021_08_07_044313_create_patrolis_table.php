@@ -18,9 +18,9 @@ class CreatePatrolisTable extends Migration
             $table->bigInteger('user_id');
             $table->date('date');
             $table->time('start');
-            $table->time('end');
-            $table->string('report');
-            $table->string('photo');
+            $table->time('end')->nullable();
+            $table->string('report')->nullable();
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
     }

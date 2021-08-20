@@ -34,8 +34,8 @@
                                                     <button type="submit" class="btn btn-success">Mulai</button>
                                                 </form> --}}
                                                     <h3>Silahkan Tempelkan Kartu RFID Anda</h3>
-                                                    <img src="{{ url('/storage/image/rfid.png') }}" style="width: 200px"> <br>
-                                                    <img src="{{ url('/storage/image/animasi2.gif') }}">
+                                                    <img src="{{ url('/assets/images/rfid.png') }}" style="width: 200px"> <br>
+                                                    <img src="{{ url('/assets/images/animasi2.gif') }}">
                                             </div>
                                         @else
                                             @if ($patroli->end == null)
