@@ -2,7 +2,6 @@
 
 use API\RfidController;
 use App\Http\Controllers\API\PatroliController;
-use App\Http\Controllers\API\UUIDController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +22,3 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('rfid', RfidController::class);
 Route::post('mulai-patroli', [PatroliController::class,'mulaiPatroli']);
-Route::get('get-uuid', [UUIDController::class, 'getUUID']);
