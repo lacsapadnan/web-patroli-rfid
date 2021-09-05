@@ -32,8 +32,7 @@
                     <th>Jam Mulai</th>
                     <th>Jam Selesai</th>
                     <th>Laporan</th>
-                    <th class="text-center">Foto</th>
-                    <th>Action</th>
+                    <th class="text-center" style="width: 100px">Foto</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,15 +45,6 @@
                         <td>{{ $laporan->end }}</td>
                         <td>{{ $laporan->report }}</td>
                         <td class="text-center"><img onclick="img_popup()" class="img-report-patroli" src="{{ url('/storage/image/'.$laporan->photo) }}" alt="Foto Laporan" style="width: 50%;height: auto"><td>
-                        <td>
-                            <div class="d-flex">
-                                <form method="POST" action="#">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-icon btn-danger btn-tone"><i class="anticon anticon-delete"></i></button>
-                                </form>
-                            </div>
-                        </td>
                     </tr>
                 @endforeach
             </tbody>
